@@ -20,6 +20,9 @@ package org.jasig.ssp.transferobject.reports;
 
 import org.jasig.ssp.model.Person;
 
+import java.util.Comparator;
+import java.util.List;
+
 public class JournalCaseNotesStudentReportTO extends BaseStudentReportTO {
 	
 	public JournalCaseNotesStudentReportTO(){
@@ -58,4 +61,12 @@ public class JournalCaseNotesStudentReportTO extends BaseStudentReportTO {
 	public void setJournalSourceName(String journalSourceName) {
 		this.journalSourceName = journalSourceName;
 	}
+
+	//3
+	public static void sortByStudentName(List<JournalCaseNotesStudentReportTO> toSort) {
+		toSort.sort(Comparator.comparing(JournalCaseNotesStudentReportTO::getLastName)
+				.thenComparing(JournalCaseNotesStudentReportTO::getFirstName)
+				.thenComparing(JournalCaseNotesStudentReportTO::getMiddleName));
+	}
+
 }
