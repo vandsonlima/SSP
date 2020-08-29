@@ -19,9 +19,7 @@
 package org.jasig.ssp.service.impl;
 
 import org.jasig.ssp.dao.JournalEntryDao;
-import org.jasig.ssp.dao.PersonDao;
 import org.jasig.ssp.model.JournalEntry;
-import org.jasig.ssp.model.JournalEntryDetail;
 import org.jasig.ssp.model.Person;
 import org.jasig.ssp.service.AbstractRestrictedPersonAssocAuditableService;
 import org.jasig.ssp.service.JournalEntryService;
@@ -39,13 +37,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 //total de pontos antes: 24
-//nova contagem:11
+//nova contagem:8
 @Service
 @Transactional
 public class JournalEntryServiceImpl
@@ -58,11 +54,10 @@ public class JournalEntryServiceImpl
 
 	//1
 	@Autowired
-	private transient PersonProgramStatusService personProgramStatusService;
-
+	private JournalCaseNotesStudentListProcessor jounalCaseListProcessor;
 	//1
 	@Autowired
-	private JournalCaseNotesStudentListProcessor jounalCaseListProcessor;
+	private CheckForTransitionProcessor checkForTransitionProcessor;
 
 	@Override
 	protected JournalEntryDao getDao() {
@@ -76,7 +71,7 @@ public class JournalEntryServiceImpl
 		//1:ValidationException
 			throws ObjectNotFoundException, ValidationException {
 		final JournalEntry journalEntry = getDao().save(obj);
-		checkForTransition(journalEntry);
+		checkForTransitionProcessor.process(journalEntry);
 		return journalEntry;
 	}
 
@@ -85,29 +80,8 @@ public class JournalEntryServiceImpl
 	public JournalEntry save(final JournalEntry obj)
 			throws ObjectNotFoundException, ValidationException {
 		final JournalEntry journalEntry = getDao().save(obj);
-		checkForTransition(journalEntry);
+	 	checkForTransitionProcessor.process(journalEntry);
 		return journalEntry;
-	}
-
-	//3
-	private void checkForTransition(final JournalEntry journalEntry)
-			throws ObjectNotFoundException, ValidationException {
-		// search for a JournalStep that indicates a transition
-		//1:JournalEntryDetail
-		//1:for
-		for (final JournalEntryDetail detail : journalEntry
-				.getJournalEntryDetails()) {
-			//1
-			if (detail.getJournalStepJournalStepDetail().getJournalStep()
-					.isUsedForTransition()) {
-				// is used for transition, so attempt to set program status
-				personProgramStatusService.setTransitionForStudent(journalEntry
-						.getPerson());
-
-				// exit early because no need to loop through others
-				return;
-			}
-		}
 	}
 
 	@Override

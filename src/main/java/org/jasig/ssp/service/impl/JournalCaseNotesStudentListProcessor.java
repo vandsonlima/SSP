@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @since 29/08/2020
  **/
-//10
+//8
 @Component
 public class JournalCaseNotesStudentListProcessor {
 
@@ -38,11 +38,6 @@ public class JournalCaseNotesStudentListProcessor {
     }
 
     public List<JournalCaseNotesStudentReportTO> process(@NotNull JournalStepSearchFormTO personSearchForm, @NotNull SortingAndPaging sAndP) throws ObjectNotFoundException {
-        //1
-        Assert.isNull(personSearchForm,"personSearchForm must be not null");
-        //1
-        Assert.isNull(sAndP,"sAndP must be not null");
-
         //1:JournalCaseNotesStudentReportTO
         final List<JournalCaseNotesStudentReportTO> personsWithJournalEntries = journalEntryDao.getJournalCaseNoteStudentReportTOsFromCriteria(personSearchForm, sAndP);
         final Map<String, JournalCaseNotesStudentReportTO> map = new HashMap<String, JournalCaseNotesStudentReportTO>();
