@@ -1,6 +1,9 @@
 package org.jasig.ssp.service.impl;
 
-import org.jasig.ssp.model.*;
+import org.jasig.ssp.model.EarlyAlert;
+import org.jasig.ssp.model.Message;
+import org.jasig.ssp.model.Person;
+import org.jasig.ssp.model.SubjectAndBody;
 import org.jasig.ssp.service.MessageService;
 import org.jasig.ssp.service.ObjectNotFoundException;
 import org.jasig.ssp.service.PersonService;
@@ -11,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.mail.SendFailedException;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -30,15 +31,18 @@ public class ConfirmationMessageToFacultySender {
     private MessageTemplateService messageTemplateService;
     //1
     private MessageService messageService;
+    //1
+    private FilltemplateParametersProcessor fillTemplateParametersProcessor;
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(ConfirmationMessageToFacultySender.class);
 
-    public ConfirmationMessageToFacultySender(ConfigService configService, PersonService personService, MessageTemplateService messageTemplateService, MessageService messageService) {
+    public ConfirmationMessageToFacultySender(ConfigService configService, PersonService personService, MessageTemplateService messageTemplateService, MessageService messageService, FilltemplateParametersProcessor fillTemplateParametersProcessor) {
         this.configService = configService;
         this.personService = personService;
         this.messageTemplateService = messageTemplateService;
         this.messageService = messageService;
+        this.fillTemplateParametersProcessor = fillTemplateParametersProcessor;
     }
 
     /**
@@ -48,13 +52,11 @@ public class ConfirmationMessageToFacultySender {
      * @param earlyAlert
      *            Early Alert
      * @throws ObjectNotFoundException
-     * @throws SendFailedException
      * @throws ValidationException
      */
-    //7
+    //6
     public void send(final EarlyAlert earlyAlert)
-            throws ObjectNotFoundException, SendFailedException, ValidationException {
-        //1
+            throws ObjectNotFoundException, ValidationException {
         //1
         if (earlyAlert == null) {
             throw new IllegalArgumentException("EarlyAlert was missing.");
@@ -82,7 +84,7 @@ public class ConfirmationMessageToFacultySender {
         //1
         else {
             final SubjectAndBody subjAndBody = messageTemplateService
-                    .createEarlyAlertFacultyConfirmationMessage(fillTemplateParameters(earlyAlert));
+                    .createEarlyAlertFacultyConfirmationMessage(fillTemplateParametersProcessor.process(earlyAlert));
 
             // Create and queue the message
             final Message message = messageService.createMessage(person, null,
@@ -92,8 +94,4 @@ public class ConfirmationMessageToFacultySender {
         }
     }
 
-    private Map<String, Object> fillTemplateParameters(EarlyAlert earlyAlert) {
-        //TODO:abstrair o fillTemplateParameters para um service
-        return null;
-    }
 }

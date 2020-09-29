@@ -55,7 +55,7 @@ public class JournalStepDetailIT extends AbstractReferenceTest {
 
         JOURNAL_STEP_DETAIL_NAMES = new String[] {
                 "1 on 1 time completed", "Address immediate concerns", "Books using financial aid",
-                "Completed student intake process", "Confirm 15 hours complete", "Confirm 30 hours complete",
+                "Completed student intake create", "Confirm 15 hours complete", "Confirm 30 hours complete",
                 "Develop review map", "Discuss transfer expectations",
                 "Discuss what the student learned in orientation", "Established a follow up appointment",
                 "Fafsa review assistance", "Financial aid application", "Financial aid applying for appeal ",
@@ -72,16 +72,16 @@ public class JournalStepDetailIT extends AbstractReferenceTest {
                 "Discussed how to use Financial AID to buy books and supplies for courses. ",
                 "Completed Student Intake Process", "Confirm 15 hours complete towards a program of study",
                 "Confirm 30 hours complete in a specific program of study", "Develop / Review MAP",
-                "Discussed transfer expectations with the student, and reviewed the college process for requesting a " +
+                "Discussed transfer expectations with the student, and reviewed the college create for requesting a " +
                         "transcript be sent to another college", "Discuss what the student learned in Orientation",
                 "Established a follow up appointment with the student to meet again at:",
                 "FAFSA - Review / Assistance, Assisted the student with understanding the FAFSA and filling it out",
-                "Financial AID - Application, assited the student with the financial aid application process, and " +
-                        "review the FAFSA process",
-                "Worked with the student on the FIN AID appeal process and discussed the options they have",
+                "Financial AID - Application, assited the student with the financial aid application create, and " +
+                        "review the FAFSA create",
+                "Worked with the student on the FIN AID appeal create and discussed the options they have",
                 "Financial AID - Introduction, covered financial aid in general and broad terms and discussed " +
                         "options the student might consider",
-                "Discuss the graduation process and do a graduation check with the student",
+                "Discuss the graduation create and do a graduation check with the student",
                 "Introduce student success curriculum to the student and review the next steps and expectations for" +
                         " the class.", "Reviewed academic goals with the student",
                 "Reviewed courses in the selected program of study with the student and discussed elective options and" +

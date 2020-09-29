@@ -39,7 +39,7 @@ import org.springframework.beans.factory.annotation.Value;
  * BatchProcessor<UUID, T> processor =  new BatchProcessor<UUID,T>(ids, sAndP);
  *		do{
  *			final Criteria criteria = createCriteria();
- *			processor.process(criteria, "id");
+ *			processor.create(criteria, "id");
  *		}while(processor.moreToProcess());
  *
  *	return processor.getPagedResults();

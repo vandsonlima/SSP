@@ -132,7 +132,7 @@ public abstract class AbstractPersonSearchBasedJobQueuer<R extends HasPersonSear
 	}
 
 	protected ValidationException noPersonSearchResultsException() {
-		return new ValidationException("Person search parameters matched no records. Can't process bulk action request.");
+		return new ValidationException("Person search parameters matched no records. Can't create bulk action request.");
 	}
 
 	protected JobTO doEnqueueJob(R jobRequest, Person currentSspPerson, PersonSearchRequest searchRequest, long searchResultCount)

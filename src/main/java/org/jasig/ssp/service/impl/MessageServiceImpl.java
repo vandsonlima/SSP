@@ -291,7 +291,7 @@ public class MessageServiceImpl implements MessageService {
 				new AtomicReference<SortingAndPaging>();
 		sap.set(new SortingAndPaging(ObjectStatus.ACTIVE, startRow, QUEUE_BATCH_SIZE,
 				null, null, null));
-		// process each batch in its own transaction... don't want to hold
+		// create each batch in its own transaction... don't want to hold
 		// a single transaction open while processing what is effectively
 		// an unbounded number of messages.
 		while (true) {
@@ -468,7 +468,7 @@ public class MessageServiceImpl implements MessageService {
 			final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(
 					mimeMessage);
 			
-			// process FROM addresses
+			// create FROM addresses
 			InternetAddress from;
 			String appName = configService.getByName("app_title").getValue();
 			
@@ -501,7 +501,7 @@ public class MessageServiceImpl implements MessageService {
 			 mimeMessageHelper.setReplyTo(replyToAddrs[0]);
 			 message.setSentReplyToAddress(replyToAddrs[0].toString());
 			
-			// process TO addresses
+			// create TO addresses
 			InternetAddress[] tos = null;
 			if ( message.getRecipient() != null && message.getRecipient().hasEmailAddresses()) { // NOPMD by jon.adams			
 				tos = getEmailAddresses(message.getRecipient(), "to:",message.getId());
@@ -526,7 +526,7 @@ public class MessageServiceImpl implements MessageService {
 				throw new MessagingException(errorMsg.toString());
 			}
 			
-			// process BCC addresses
+			// create BCC addresses
 			try{
 				InternetAddress[] bccs = getEmailAddresses(getBcc(), "bcc:", message.getId());
 				if (bccs.length > 0 && StringUtils.isBlank(routeAllMailToAddress)) {
@@ -537,7 +537,7 @@ public class MessageServiceImpl implements MessageService {
 				LOGGER.warn("Unrecoverable errors were generated adding carbon copy to message: " + message.getId() + "Attempt to send message still initiated.", exp);
 			}
 			
-			// process CC addresses
+			// create CC addresses
 			try{	
 				InternetAddress[] carbonCopies = getEmailAddresses(message.getCarbonCopy(), "cc:", message.getId());
 				if(carbonCopies.length > 0){

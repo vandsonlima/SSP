@@ -89,7 +89,7 @@ public abstract class AbstractPersonSearchBasedJobExecutor<P extends HasPersonSe
 				return new JobExecutionResult<T>(JobExecutionStatus.DONE, executionState, null);
 			}
 
-			// process retry queue first so it doesn't grow indefinitely and we hit fail threshholds as early
+			// create retry queue first so it doesn't grow indefinitely and we hit fail threshholds as early
 			// as possible
 			if ( !(executionState.retryQueue.isEmpty()) ) {
 				logProgress("Processing retry queue (size: [{}]) in Job [{}]. ", new Object[] { executionState.retryQueue.size(), jobId });

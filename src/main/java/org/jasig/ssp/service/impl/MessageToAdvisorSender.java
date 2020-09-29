@@ -24,21 +24,27 @@ import java.util.Set;
 /**
  * @since 29/08/2020
  **/
+//17
 @Component
 public class MessageToAdvisorSender {
 
-
+    //1
     private MessageTemplateService messageTemplateService;
+    //1
     private MessageService messageService;
+    //1
     private EarlyAlertRoutingService earlyAlertRoutingService;
+    //1
+    private FilltemplateParametersProcessor fillTemplateParametersProcessor;
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(MessageToAdvisorSender.class);
 
-    public MessageToAdvisorSender(MessageTemplateService messageTemplateService, MessageService messageService, EarlyAlertRoutingService earlyAlertRoutingService) {
+    public MessageToAdvisorSender(MessageTemplateService messageTemplateService, MessageService messageService, EarlyAlertRoutingService earlyAlertRoutingService, FilltemplateParametersProcessor fillTemplateParametersProcessor) {
         this.messageTemplateService = messageTemplateService;
         this.messageService = messageService;
         this.earlyAlertRoutingService = earlyAlertRoutingService;
+        this.fillTemplateParametersProcessor = fillTemplateParametersProcessor;
     }
 
     /**
@@ -46,15 +52,12 @@ public class MessageToAdvisorSender {
      *
      * @param earlyAlert
      *            Early Alert
-     * @param emailCC
-     *            Email address to also CC this message
      * @throws ObjectNotFoundException
-     * @throws SendFailedException
      * @throws ValidationException
      */
     //13
-    public void send(@NotNull final EarlyAlert earlyAlert, final String emailCC) throws ObjectNotFoundException,
-            SendFailedException, ValidationException {
+    public void send(@NotNull final EarlyAlert earlyAlert) throws ObjectNotFoundException,
+            ValidationException {
         //1
         if (earlyAlert == null) {
             throw new IllegalArgumentException("Early alert was missing.");
@@ -64,9 +67,10 @@ public class MessageToAdvisorSender {
             throw new IllegalArgumentException("EarlyAlert Person is missing.");
         }
 
+        final String emailCC = earlyAlert.getEmailCC();
         final Person person = earlyAlert.getPerson().getCoach();
         final SubjectAndBody subjAndBody = messageTemplateService
-                .createEarlyAlertAdvisorConfirmationMessage(fillTemplateParameters(earlyAlert));
+                .createEarlyAlertAdvisorConfirmationMessage(fillTemplateParametersProcessor.process(earlyAlert));
 
         Set<String> watcherEmailAddresses = new HashSet<String>(earlyAlert.getPerson().getWatcherEmailAddresses());
         //1
@@ -145,8 +149,4 @@ public class MessageToAdvisorSender {
         }
     }
 
-    private Map<String, Object> fillTemplateParameters(EarlyAlert earlyAlert) {
-        //TODO:abstrair o fillTemplateParameters para um service
-        return null;
-    }
 }

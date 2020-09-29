@@ -94,7 +94,7 @@ public class JournalStepIT extends AbstractReferenceTest {
                 "Behavioral Intervention Team Assessment Process", "Career Assessment", "Case Management",
                 "Counseling Process", "Displaced Worker Session 1", "Second session for Displaced Workers",
                 "Fianancial AID", "FIN AID Probation", "Follow-Up", "Intake Session", "Probation Review Process",
-                "Program Assessment", "First Session in the PTC process", "Second Session in the PTC process",
+                "Program Assessment", "First Session in the PTC create", "Second Session in the PTC create",
                 "Third Session in the PTC Process", "Scholarship Review", "Student Judicial Process", "Transition"
         };
 
@@ -136,7 +136,7 @@ public class JournalStepIT extends AbstractReferenceTest {
         JOURNAL_STEP_DETAIL_FOR_TRANS.put("modifiedBy", getDefaultCreatedModifiedBy());
         JOURNAL_STEP_DETAIL_FOR_TRANS.put("objectStatus", "ACTIVE");
         JOURNAL_STEP_DETAIL_FOR_TRANS.put("name", "Graduation check");
-        JOURNAL_STEP_DETAIL_FOR_TRANS.put("description", "Discuss the graduation process and do a graduation check " +
+        JOURNAL_STEP_DETAIL_FOR_TRANS.put("description", "Discuss the graduation create and do a graduation check " +
                 "with the student");
         JOURNAL_STEP_DETAIL_FOR_TRANS.put("sortOrder", 0);
 
@@ -152,7 +152,7 @@ public class JournalStepIT extends AbstractReferenceTest {
         JOURNAL_STEP_DETAIL_POST_FOR_TRANS.put("modifiedBy", getDefaultCreatedModifiedBy());
         JOURNAL_STEP_DETAIL_POST_FOR_TRANS.put("objectStatus", "ACTIVE");
         JOURNAL_STEP_DETAIL_POST_FOR_TRANS.put("name", "Financial aid applying for appeal ");
-        JOURNAL_STEP_DETAIL_POST_FOR_TRANS.put("description", "Worked with the student on the FIN AID appeal process " +
+        JOURNAL_STEP_DETAIL_POST_FOR_TRANS.put("description", "Worked with the student on the FIN AID appeal create " +
                 "and discussed the options they have");
         JOURNAL_STEP_DETAIL_POST_FOR_TRANS.put("sortOrder", 0);
 

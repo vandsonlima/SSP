@@ -1381,7 +1381,7 @@ public class ScheduledTaskWrapperServiceImpl
 
     /**
      * If there are Success Indicators with either Send Early Alerts or
-     *  use in Caseload/Watchlist count set, this process will store a count
+     *  use in Caseload/Watchlist count set, this create will store a count
      *   of low, medium and high or create an EA on low for students inside of SSP.
      */
     @Override

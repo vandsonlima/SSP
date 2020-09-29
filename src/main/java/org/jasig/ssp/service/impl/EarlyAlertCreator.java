@@ -2,11 +2,15 @@ package org.jasig.ssp.service.impl;
 
 import org.jasig.ssp.dao.EarlyAlertDao;
 import org.jasig.ssp.model.*;
+import org.jasig.ssp.model.reference.EarlyAlertReason;
+import org.jasig.ssp.model.reference.EarlyAlertSuggestion;
 import org.jasig.ssp.model.reference.ProgramStatus;
 import org.jasig.ssp.model.reference.StudentType;
 import org.jasig.ssp.service.ObjectNotFoundException;
 import org.jasig.ssp.service.PersonProgramStatusService;
 import org.jasig.ssp.service.PersonService;
+import org.jasig.ssp.service.reference.EarlyAlertReasonService;
+import org.jasig.ssp.service.reference.EarlyAlertSuggestionService;
 import org.jasig.ssp.service.reference.ProgramStatusService;
 import org.jasig.ssp.service.reference.StudentTypeService;
 import org.jasig.ssp.web.api.validation.ValidationException;
@@ -15,13 +19,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 /**
  * @since 29/08/2020
  **/
-//21
+//37
 @Component
 public class EarlyAlertCreator {
 
@@ -35,21 +40,33 @@ public class EarlyAlertCreator {
     private PersonProgramStatusService personProgramStatusService;
     //1
     private StudentTypeService studentTypeService;
-
+    //1
+    private MessageToAdvisorSender messageToAdvisorSender;
+    //1
+    private ConfirmationMessageToFacultySender confirmationMessageToFacultySender;
+    //1
+    private EarlyAlertSuggestionService earlyAlertSuggestionService;
+    //1
+    private EarlyAlertReasonService earlyAlertReasonService;
+//9
     private static final Logger LOGGER = LoggerFactory
             .getLogger(EarlyAlertCreator.class);
 
-    public EarlyAlertCreator(PersonService personService, EarlyAlertDao earlyAlertDao, ProgramStatusService programStatusService, PersonProgramStatusService personProgramStatusService, StudentTypeService studentTypeService) {
+    public EarlyAlertCreator(PersonService personService, EarlyAlertDao earlyAlertDao, ProgramStatusService programStatusService, PersonProgramStatusService personProgramStatusService, StudentTypeService studentTypeService, MessageToAdvisorSender messageToAdvisorSender, ConfirmationMessageToFacultySender confirmationMessageToFacultySender, EarlyAlertSuggestionService earlyAlertSuggestionService, EarlyAlertReasonService earlyAlertReasonService) {
         this.personService = personService;
         this.earlyAlertDao = earlyAlertDao;
         this.programStatusService = programStatusService;
         this.personProgramStatusService = personProgramStatusService;
         this.studentTypeService = studentTypeService;
+        this.messageToAdvisorSender = messageToAdvisorSender;
+        this.confirmationMessageToFacultySender = confirmationMessageToFacultySender;
+        this.earlyAlertSuggestionService = earlyAlertSuggestionService;
+        this.earlyAlertReasonService = earlyAlertReasonService;
     }
 
     //6
-    public EarlyAlert process(EarlyAlert earlyAlert) throws ValidationException, ObjectNotFoundException {
-        //1
+    public EarlyAlert create(EarlyAlert earlyAlert) throws ValidationException, ObjectNotFoundException {
+        //3
         //1:person
         final Person student = earlyAlert.getPerson();
 
@@ -72,6 +89,11 @@ public class EarlyAlertCreator {
 
         // Create alert
         final EarlyAlert saved = earlyAlertDao.save(earlyAlert);
+
+        // Send e-mail to assigned advisor (coach)
+        messageToAdvisorSender.send(saved);
+        confirmationMessageToFacultySender.send(saved);
+
         return saved;
     }
 
@@ -131,7 +153,7 @@ public class EarlyAlertCreator {
         }
     }
 
-    //5
+    //7
     private void ensureValidAlertedOnPersonStateOrFail(Person person)
             throws ObjectNotFoundException, ValidationException {
 
@@ -140,6 +162,7 @@ public class EarlyAlertCreator {
             person.setObjectStatus(ObjectStatus.ACTIVE);
         }
 
+        //1
         final ProgramStatus programStatus =  programStatusService.getActiveStatus();
         //1
         if ( programStatus == null ) {
@@ -164,6 +187,7 @@ public class EarlyAlertCreator {
 
         //1
         if ( person.getStudentType() == null ) {
+            //1
             StudentType studentType = studentTypeService.get(StudentType.EAL_ID);
             //1
             if ( studentType == null ) {
@@ -173,5 +197,64 @@ public class EarlyAlertCreator {
             }
             person.setStudentType(studentType);
         }
+    }
+
+    //10
+    public EarlyAlert save(EarlyAlert earlyAlert) throws ObjectNotFoundException {
+        final EarlyAlert current = earlyAlertDao.get(earlyAlert.getId());
+
+        current.setCourseName(earlyAlert.getCourseName());
+        current.setCourseTitle(earlyAlert.getCourseTitle());
+        current.setEmailCC(earlyAlert.getEmailCC());
+        current.setCampus(earlyAlert.getCampus());
+        current.setEarlyAlertReasonOtherDescription(earlyAlert
+                .getEarlyAlertReasonOtherDescription());
+        current.setComment(earlyAlert.getComment());
+        current.setClosedDate(earlyAlert.getClosedDate());
+        //1
+        if ( earlyAlert.getClosedById() == null ) {
+            current.setClosedBy(null);
+        }
+        //1
+        else {
+            current.setClosedBy(personService.get(earlyAlert.getClosedById()));
+        }
+
+        //1
+        if (earlyAlert.getPerson() == null) {
+            current.setPerson(null);
+        }
+        //1
+        else {
+            current.setPerson(personService.get(earlyAlert.getPerson().getId()));
+        }
+
+        //1
+        final Set<EarlyAlertReason> earlyAlertReasons = new HashSet<EarlyAlertReason>();
+        //1
+        if (earlyAlert.getEarlyAlertReasons() != null) {
+            //1
+            for (final EarlyAlertReason reason : earlyAlert.getEarlyAlertReasons()) {
+                earlyAlertReasons.add(earlyAlertReasonService.load(reason
+                        .getId()));
+            }
+        }
+
+        current.setEarlyAlertReasons(earlyAlertReasons);
+        //1
+        final Set<EarlyAlertSuggestion> earlyAlertSuggestions = new HashSet<>();
+        //1
+        if (earlyAlert.getEarlyAlertSuggestions() != null) {
+            //1
+            for (final EarlyAlertSuggestion reason : earlyAlert.getEarlyAlertSuggestions()) {
+                earlyAlertSuggestions.add(earlyAlertSuggestionService
+                        .load(reason
+                                .getId()));
+            }
+        }
+
+        current.setEarlyAlertSuggestions(earlyAlertSuggestions);
+
+        return earlyAlertDao.save(current);
     }
 }

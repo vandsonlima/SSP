@@ -141,7 +141,7 @@ public class SuccessIndicatorsTaskImpl implements SuccessIndicatorsTask {
                     successIndicatorService.getWithShowInCaseloadOrGenerateEarlyAlert(true, true);
 
             if (CollectionUtils.isNotEmpty(rawConfiguredSuccessIndicators)) {
-                //process success indicators into Map
+                //create success indicators into Map
                 configuredSuccessIndicatorsByCode = Maps.newHashMap();
                 for (final SuccessIndicator rawIndicator : rawConfiguredSuccessIndicators) {
                     configuredSuccessIndicatorsByCode.put(rawIndicator.getCode(),
@@ -233,7 +233,7 @@ public class SuccessIndicatorsTaskImpl implements SuccessIndicatorsTask {
 
                 if ( processedOfTotal.getFirst() == 0 ) {
                     // shouldn't happen but want to guard against endless loops
-                    LOGGER.debug("Appear to be more records to process but"
+                    LOGGER.debug("Appear to be more records to create but"
                             + " last batch processed zero records. Exiting"
                             + " success indicator count/alert task.");
                     nextPersonIndex = 0;
@@ -268,7 +268,7 @@ public class SuccessIndicatorsTaskImpl implements SuccessIndicatorsTask {
                 // APIs mean we can't actually deal with total result sets
                 // larger than Integer.MAX_VALUE
                 if ( nextPersonIndex > Integer.MAX_VALUE ) {
-                    LOGGER.warn("Cannot process more than {} total persons,"
+                    LOGGER.warn("Cannot create more than {} total persons,"
                                     + " even across executions. Abandoning and"
                                     + " resetting success indicator count/alert task.",
                             Integer.MAX_VALUE);

@@ -223,7 +223,7 @@ public final class EarlyAlertPortletController {
 
 			/*
 			 * NB:  It's on us to translate from schoolId <-> studentId (SSP 
-			 * UUID) at this point in the Early Alert process.  Previous APIs 
+			 * UUID) at this point in the Early Alert create.  Previous APIs
 			 * user the former where following APIs use the later.
 			 */
 			if(StringUtils.isNotBlank(schoolId)) {

@@ -130,11 +130,11 @@ public class ChallengeReferralIT extends AbstractReferenceTest {
                 "offered throughout the year.  Sliding fee scale will establish the fee and scholarships may be " +
                 "available.", "If question balance on fee bill take fee bill to financial aid for clarification.",
                 "Consider the amount of award is based upon number of credit hours carried each quarter.",
-                "Consider Quarterly Financial Aid deadlines (deadline to guarantee process of aid if eligible by " +
+                "Consider Quarterly Financial Aid deadlines (deadline to guarantee create of aid if eligible by " +
                         "fee payment date). Summer May 1 Fall August 1 Winter November 15 Spring February 15",
                 "FINANCIAL AID OFFICE APPLICATION:  Submit College Financial Aid Office application to the Financial " +
                         "Aid Office 11346 555-3000.", "HANDOUTS:  Review handouts in reference to Health Well-Being " +
-                "and Success in College.", "Holistic case management process to facilitate Student Success",
+                "and Success in College.", "Holistic case management create to facilitate Student Success",
                 "To improve English skills at no cost (not enrolled in classes) contact Barbara Gilbert 555-2894 for " +
                         "computer audio-visual programs. ", "Meet with instructor to discuss specific needs for " +
                 "class work improvement.", "Consider individualizing a degree program.  For additional information " +
@@ -179,7 +179,7 @@ public class ChallengeReferralIT extends AbstractReferenceTest {
                 "Building 8 room 8025 555-2509.", "Register for Student Success Course -Section 101 from all " +
                 "divisions to learn strategies for success.", "If eligible contact Student Support Services for " +
                 "support and guidance to achieve educational goals and to discuss services requirements and/or " +
-                "application process in 11342 or call 555-3550.", "Any student may access the study skills site " +
+                "application create in 11342 or call 555-3550.", "Any student may access the study skills site " +
                 "designated for probation students at http://www.studentsuccessplan.org or" +
                 " http://www.aims.edu/student/arc/index.php.", "Visit website for listing of substance abuse " +
                 "treatment facilities located in  http://www.studentsuccessplan.org?state=Demo&city= and the " +
@@ -241,10 +241,10 @@ public class ChallengeReferralIT extends AbstractReferenceTest {
                 "fee and scholarships may be available.", "If question balance on fee bill take fee bill to " +
                 "financial aid for clarification.", "Consider the amount of award is based upon number of " +
                 "credit hours carried each quarter.", "Consider Quarterly Financial Aid deadlines (deadline to " +
-                "guarantee process of aid if eligible by fee payment date). Summer May 1 Fall August 1 Winter " +
+                "guarantee create of aid if eligible by fee payment date). Summer May 1 Fall August 1 Winter " +
                 "November 15 Spring February 15", "FINANCIAL AID OFFICE APPLICATION:  Submit College Financial " +
                 "Aid Office application to the Financial Aid Office 11346 555-3000.", "HANDOUTS:  Review handouts " +
-                "in reference to Health Well-Being and Success in College.", "Holistic case management process to " +
+                "in reference to Health Well-Being and Success in College.", "Holistic case management create to " +
                 "facilitate Student Success", "", "", "Consider individualizing a degree program.  For additional" +
                 " information contact James at 555-2101 for A.A. programs not listed in the catalog.", "Increase fonts" +
                 " for written or published class material.", "Complete Learning and Study Strategies Inventory (LASSI)" +
@@ -286,7 +286,7 @@ public class ChallengeReferralIT extends AbstractReferenceTest {
                 "Services Survey.", "Refer student to Student Judicial Affairs Building 8 room 8025 555-2509.",
                 "Register for Student Success Course -Section 101 from all divisions to learn strategies for" +
                         " success.", "If eligible contact Student Support Services for support and guidance to" +
-                " achieve educational goals and to discuss services requirements and/or application process in 11342" +
+                " achieve educational goals and to discuss services requirements and/or application create in 11342" +
                 " or call 555-3550.", "Any student may access the study skills site designated for probation students " +
                 "at www.studentsuccessplan.org or www.aims.edu/student/arc/index.php.", "Visit website for listing of " +
                 "substance abuse treatment facilities located in  " +

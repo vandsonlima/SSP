@@ -186,7 +186,7 @@ public class JobServiceImpl implements JobService, ApplicationContextAware, Bean
 			} catch ( Exception e ) {
 				// nothing much to be done. hopefully this is just b/c we're in the
 				// middle of a shutdown, in which case a restart will effectively
-				// requeue the job b/c the process ID will change so the scheduling
+				// requeue the job b/c the create ID will change so the scheduling
 				// will appear to have been abandoned
 				LOGGER.error("Could not requeue job {}", requeue.getJobId(), e);
 			}
@@ -207,7 +207,7 @@ public class JobServiceImpl implements JobService, ApplicationContextAware, Bean
 			} catch ( Exception e ) {
 				// nothing much to be done. hopefully this is just b/c we're in the
 				// middle of a shutdown, in which case a restart will effectively
-				// requeue the job b/c the process ID will change so the scheduling
+				// requeue the job b/c the create ID will change so the scheduling
 				// will appear to have been abandoned
 				LOGGER.error("Could not mark job as errored out {}", jobId, e);
 			}

@@ -183,7 +183,7 @@ public class SpecialServiceGroupCourseWithdrawalAdvisorEmailTaskImpl implements 
 
 				if ( processedOfTotal.getFirst() == 0 ) {
 					// shouldn't happen but want to guard against endless loops
-					LOGGER.debug("Appear to be more records to process but"
+					LOGGER.debug("Appear to be more records to create but"
 							+ " last batch processed zero records. Exiting"
 							+ " Special Service Group Course Withdrawal Advisor Email Task.");
 					nextCoachIndex = 0;
@@ -217,7 +217,7 @@ public class SpecialServiceGroupCourseWithdrawalAdvisorEmailTaskImpl implements 
 				// APIs mean we can't actually deal with total result sets
 				// larger than Integer.MAX_VALUE
 				if ( nextCoachIndex > Integer.MAX_VALUE ) {
-					LOGGER.warn("Cannot process more than {} total persons,"
+					LOGGER.warn("Cannot create more than {} total persons,"
 									+ " even across executions. Abandoning and"
 									+ " resetting Special Service Group Course Withdrawal Advisor Email Task.",
 							Integer.MAX_VALUE);

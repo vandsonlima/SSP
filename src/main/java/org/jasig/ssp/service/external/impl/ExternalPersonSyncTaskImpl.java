@@ -176,7 +176,7 @@ public class ExternalPersonSyncTaskImpl implements ExternalPersonSyncTask {
 
 				if ( processedOfTotal.getFirst() == 0 ) {
 					// shouldn't happen but want to guard against endless loops
-					LOGGER.debug("Appear to be more records to process but"
+					LOGGER.debug("Appear to be more records to create but"
 							+ " last batch processed zero records. Exiting"
 							+ " person sync task.");
 					nextPersonIndex = 0;
@@ -211,7 +211,7 @@ public class ExternalPersonSyncTaskImpl implements ExternalPersonSyncTask {
 				// APIs mean we can't actually deal with total result sets
 				// larger than Integer.MAX_VALUE
 				if ( nextPersonIndex > Integer.MAX_VALUE ) {
-					LOGGER.warn("Cannot process more than {} total persons,"
+					LOGGER.warn("Cannot create more than {} total persons,"
 							+ " even across executions. Abandoning and"
 							+ " resetting sync task.",
 							Integer.MAX_VALUE);
@@ -319,7 +319,7 @@ public class ExternalPersonSyncTaskImpl implements ExternalPersonSyncTask {
             internalPeopleSchoolIds.remove(person.getSchoolId());
 		}
 
-		//process people not found by school_id to hopefully find them by username
+		//create people not found by school_id to hopefully find them by username
 		if (internalPeopleSchoolIds.size() > 0) {
 		    LOGGER.debug("There were " + (peopleBySchoolId.size() - externalPeople.getResults()) +
                     " internal people not found in external records!");

@@ -56,7 +56,7 @@ public class ExternalPersonSyncTaskImplTest extends Specification {
 		when: "the task is executed"
 		syncTask.exec()
 
-		then: "enough batches run, and with the correct indices, to process everyone"
+		then: "enough batches run, and with the correct indices, to create everyone"
 		batchCnt == 5
 		batchIndices == [4,6,8,0,2]
 		syncTask.nextPersonIndex == 4
@@ -223,7 +223,7 @@ public class ExternalPersonSyncTaskImplTest extends Specification {
 		syncTask.syncWithPersonImpl = { sAndP ->
 			batchCnt++
 			startIdx = sAndP.firstResult
-			new Pair(300L,300L) // claim to process everything so we just get one iteration
+			new Pair(300L,300L) // claim to create everything so we just get one iteration
 		}
 		syncTask.exec()
 
@@ -263,7 +263,7 @@ public class ExternalPersonSyncTaskImplTest extends Specification {
 		syncTask.syncWithPersonImpl = { sAndP ->
 			batchCnt++
 			startIdx = sAndP.firstResult
-			new Pair(300L,300L) // claim to process everything so we just get one iteration
+			new Pair(300L,300L) // claim to create everything so we just get one iteration
 		}
 		syncTask.exec()
 
